@@ -1,6 +1,8 @@
 #ifndef ROBOT
 #define ROBOT
 
+#include <memory>
+
 #include <Command.h>
 
 /**
@@ -33,9 +35,14 @@ public:
     /**
      * \brief Get the current position of the robot
      *
-     * \return The current position of the robot
+     * This function returns a unique pointer to a copy of the current position
+     * of the robot.
+     * Ownership of the new Position object is transferred to the caller.
+     *
+     * \return A std::unique_ptr to a new Position object representing the current position of the robot.
+     * \warning The returned unique_ptr may be nullptr if the robot has not been placed.
      */
-    Position getPosition();
+    std::unique_ptr<Position> getPosition();
 
 private:
     /// \brief Move the robot one unit forward in its current direction.
@@ -56,7 +63,7 @@ private:
      */
     void display();
 
-    Position position; ///< Current position of the robot
+    std::unique_ptr<Position> position; ///< Current position of the robot
 
     /**
      * \brief Check if a position is valid

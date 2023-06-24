@@ -13,10 +13,10 @@ TEST_CASE("move north", "[Robot]")
     Command cmd2(Command::MOVE);
     robot.perform(cmd2);
 
-    Position newPosition = robot.getPosition();
-    REQUIRE(newPosition.x == 0);
-    REQUIRE(newPosition.y == 1);
-    REQUIRE(newPosition.direction == Position::Direction::NORTH);
+    std::unique_ptr<Position> newPosition = robot.getPosition();
+    REQUIRE(newPosition->x == 0);
+    REQUIRE(newPosition->y == 1);
+    REQUIRE(newPosition->direction == Position::Direction::NORTH);
 }
 
 TEST_CASE("avoid falling", "[Robot]")
@@ -30,10 +30,10 @@ TEST_CASE("avoid falling", "[Robot]")
     Command cmd2(Command::MOVE);
     robot.perform(cmd2);
 
-    Position newPosition = robot.getPosition();
-    REQUIRE(newPosition.x == 0);
-    REQUIRE(newPosition.y == 5);
-    REQUIRE(newPosition.direction == Position::Direction::NORTH);
+    std::unique_ptr<Position> newPosition = robot.getPosition();
+    REQUIRE(newPosition->x == 0);
+    REQUIRE(newPosition->y == 5);
+    REQUIRE(newPosition->direction == Position::Direction::NORTH);
 }
 
 TEST_CASE("rotate", "[Robot]")
@@ -47,10 +47,10 @@ TEST_CASE("rotate", "[Robot]")
     Command cmd2(Command::RIGHT);
     robot.perform(cmd2);
 
-    Position newPosition = robot.getPosition();
-    REQUIRE(newPosition.x == 0);
-    REQUIRE(newPosition.y == 0);
-    REQUIRE(newPosition.direction == Position::Direction::EAST);
+    std::unique_ptr<Position> newPosition = robot.getPosition();
+    REQUIRE(newPosition->x == 0);
+    REQUIRE(newPosition->y == 0);
+    REQUIRE(newPosition->direction == Position::Direction::EAST);
 }
 
 TEST_CASE("complex", "[Robot]")
@@ -69,8 +69,31 @@ TEST_CASE("complex", "[Robot]")
     robot.perform(leftCmd);
     robot.perform(moveCmd);
 
-    Position newPosition = robot.getPosition();
-    REQUIRE(newPosition.x == 3);
-    REQUIRE(newPosition.y == 3);
-    REQUIRE(newPosition.direction == Position::Direction::NORTH);
+    std::unique_ptr<Position> newPosition = robot.getPosition();
+    REQUIRE(newPosition->x == 3);
+    REQUIRE(newPosition->y == 3);
+    REQUIRE(newPosition->direction == Position::Direction::NORTH);
+}
+
+TEST_CASE("ignore commands before place", "[Robot]")
+{
+    Command moveCmd(Command::MOVE);
+    Command leftCmd(Command::LEFT);
+
+    Robot robot;
+    robot.perform(moveCmd);
+
+    Command cmd1(Command::PLACE);
+    cmd1.position = Position(1, 2, Position::Direction::EAST);
+    robot.perform(cmd1);
+
+    robot.perform(moveCmd);
+    robot.perform(moveCmd);
+    robot.perform(leftCmd);
+    robot.perform(moveCmd);
+
+    std::unique_ptr<Position> newPosition = robot.getPosition();
+    REQUIRE(newPosition->x == 3);
+    REQUIRE(newPosition->y == 3);
+    REQUIRE(newPosition->direction == Position::Direction::NORTH);
 }

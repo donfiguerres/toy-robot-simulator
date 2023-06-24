@@ -4,15 +4,20 @@
 
 Robot::Robot()
 {
-    this->position = Position();
+    this->position = nullptr;
 }
 
 void Robot::perform(Command cmd)
 {
+    // Ignore all commands except PLACE when the robot is not placed. The
+    // position is mean to stay as nullptr until a PLACE command is issued.
+    if (this->position == nullptr && cmd.commandType != Command::PLACE)
+        return;
+
     switch (cmd.commandType)
     {
     case Command::PLACE:
-        position = cmd.position;
+        position = std::make_unique<Position>(cmd.position);
         break;
     case Command::MOVE:
         move();
@@ -29,52 +34,54 @@ void Robot::perform(Command cmd)
     }
 }
 
-Position Robot::getPosition()
+std::unique_ptr<Position> Robot::getPosition()
 {
-    return this->position;
+    return std::make_unique<Position>(*this->position);
 }
 
 void Robot::move()
 {
-    Position newPosition = calcNewPositionAfterMove(this->position);
+    // It is expected that the position is not nullptr because we only execute
+    // the MOVE command when the robot is placed.
+    Position newPosition = calcNewPositionAfterMove(*this->position);
     if (isValidPosition(newPosition))
-        this->position = newPosition;
+        this->position = std::make_unique<Position>(newPosition);
 }
 
 void Robot::rotateLeft()
 {
-    switch (this->position.direction)
+    switch (this->position->direction)
     {
     case Position::NORTH:
-        this->position.direction = Position::WEST;
+        this->position->direction = Position::WEST;
         break;
     case Position::SOUTH:
-        this->position.direction = Position::EAST;
+        this->position->direction = Position::EAST;
         break;
     case Position::EAST:
-        this->position.direction = Position::NORTH;
+        this->position->direction = Position::NORTH;
         break;
     case Position::WEST:
-        this->position.direction = Position::SOUTH;
+        this->position->direction = Position::SOUTH;
         break;
     }
 }
 
 void Robot::rotateRight()
 {
-    switch (this->position.direction)
+    switch (this->position->direction)
     {
     case Position::NORTH:
-        this->position.direction = Position::EAST;
+        this->position->direction = Position::EAST;
         break;
     case Position::SOUTH:
-        this->position.direction = Position::WEST;
+        this->position->direction = Position::WEST;
         break;
     case Position::EAST:
-        this->position.direction = Position::SOUTH;
+        this->position->direction = Position::SOUTH;
         break;
     case Position::WEST:
-        this->position.direction = Position::NORTH;
+        this->position->direction = Position::NORTH;
         break;
     }
 }
@@ -85,7 +92,7 @@ void Robot::display()
     // for more flexibility on displaying the report.
     std::string direction = "";
 
-    switch (position.direction)
+    switch (position->direction)
     {
     case Position::NORTH:
         direction = "NORTH";
@@ -101,7 +108,8 @@ void Robot::display()
         break;
     }
 
-    std::cout << position.x << "," << position.y << "," << direction << std::endl;
+    std::cout << position->x << "," << position->y << "," << direction
+              << std::endl;
 }
 
 bool Robot::isValidPosition(Position position)

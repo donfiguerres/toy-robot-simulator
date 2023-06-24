@@ -7,7 +7,6 @@ add_executable(
 
 add_library(
   robot_core
-  RobotDriver.cpp
   Robot.cpp
   Parser.cpp
   Position.cpp
