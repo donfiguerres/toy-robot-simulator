@@ -1,5 +1,7 @@
 # Toy Robot Simulator
 
+![actions workflow](https://github.com/donfiguerres/toy-robot-simulator/actions/workflows/cmake.yml/badge.svg)
+
 This is a simulation of a robot toy moving on a square table top with a size of
 5 units x 5 units.
 
