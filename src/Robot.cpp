@@ -36,6 +36,8 @@ void Robot::perform(Command cmd)
 
 std::unique_ptr<Position> Robot::getPosition()
 {
+    if (this->position == nullptr)
+        return nullptr;
     return std::make_unique<Position>(*this->position);
 }
 
