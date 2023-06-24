@@ -81,6 +81,8 @@ TEST_CASE("ignore commands before place", "[Robot]")
     Command leftCmd(Command::LEFT);
 
     Robot robot;
+
+    // This should be ignored
     robot.perform(moveCmd);
 
     Command cmd1(Command::PLACE);
@@ -96,4 +98,15 @@ TEST_CASE("ignore commands before place", "[Robot]")
     REQUIRE(newPosition->x == 3);
     REQUIRE(newPosition->y == 3);
     REQUIRE(newPosition->direction == Position::Direction::NORTH);
+}
+
+TEST_CASE("robot not placed", "[Robot]")
+{
+    Command moveCmd(Command::MOVE);
+
+    Robot robot;
+    robot.perform(moveCmd);
+
+    std::unique_ptr<Position> newPosition = robot.getPosition();
+    REQUIRE(newPosition == nullptr);
 }
