@@ -5,6 +5,23 @@
 
 #include <Parser.h>
 
+/**
+ * \brief Custom exception for parsing errors.
+ */
+class ParsingException : public std::exception
+{
+public:
+    ParsingException(const std::string &message) : message_(message) {}
+
+    virtual const char *what() const noexcept override
+    {
+        return message_.c_str();
+    }
+
+private:
+    std::string message_;
+};
+
 Parser::Parser()
 {
     this->isStdin = true;
@@ -21,41 +38,47 @@ Command Parser::nextCommand()
 {
     std::string line = this->isStdin ? nextLineStdin() : nextLineString();
 
-    // Keep all input in uppercase so that string comparisons are easier from
-    // this point forward.
-    std::transform(line.begin(), line.end(), line.begin(), ::toupper);
-    line = trim(line);
-
-    if (line.size() == 0)
-        return Command(Command::END);
-
-    if (line == "MOVE")
-        return Command(Command::MOVE);
-
-    if (line == "LEFT")
-        return Command(Command::LEFT);
-
-    if (line == "RIGHT")
-        return Command(Command::RIGHT);
-
-    if (line == "REPORT")
-        return Command(Command::REPORT);
-
-    // Check the first token
-    std::vector<std::string> tokens = tokenize(line, " ", 2);
-    if (tokens.front() == "PLACE")
+    try
     {
-        std::vector<std::string> params = tokenize(tokens[1], ",");
-        Command result(Command::PLACE);
-        auto dir = direction(params[2]);
-        Position position(std::stoi(params[0]),
-                          std::stoi(params[1]),
-                          dir);
-        result.position = position;
-        return result;
-    }
+        // Keep all input in uppercase so that string comparisons are easier from
+        // this point forward.
+        std::transform(line.begin(), line.end(), line.begin(), ::toupper);
+        line = trim(line);
 
-    return Command(Command::ERROR);
+        if (line.size() == 0)
+            return Command(Command::END);
+
+        if (line == "MOVE")
+            return Command(Command::MOVE);
+
+        if (line == "LEFT")
+            return Command(Command::LEFT);
+
+        if (line == "RIGHT")
+            return Command(Command::RIGHT);
+
+        if (line == "REPORT")
+            return Command(Command::REPORT);
+
+        // Check the first token
+        std::vector<std::string> tokens = tokenize(line, " ", 2);
+        if (tokens.front() == "PLACE")
+        {
+            std::vector<std::string> params = tokenize(tokens[1], ",");
+            Command result(Command::PLACE);
+            auto dir = direction(params[2]);
+            Position position(std::stoi(params[0]),
+                              std::stoi(params[1]),
+                              dir);
+            result.position = position;
+            return result;
+        }
+        return Command(Command::ERROR);
+    }
+    catch (const ParsingException &e)
+    {
+        return Command(Command::ERROR);
+    }
 }
 
 std::string Parser::nextLineStdin()
@@ -128,9 +151,7 @@ Position::Direction Parser::direction(std::string input)
         return Position::Direction::EAST;
     if (input == "WEST")
         return Position::Direction::WEST;
-    // Default if can't parse
-    // TODO: Replace this with an exception
-    return Position::Direction::NORTH;
+    throw ParsingException("Invalid direction: " + input);
 }
 
 std::string Parser::trim(std::string input)

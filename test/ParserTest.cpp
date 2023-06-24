@@ -1,4 +1,8 @@
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
+
+#include <vector>
+#include <tuple>
 
 #include <Parser.h>
 
@@ -62,4 +66,15 @@ TEST_CASE("place space", "[Parser]")
     REQUIRE(nextCommand.position.x == 1);
     REQUIRE(nextCommand.position.y == 2);
     REQUIRE(nextCommand.position.direction == Position::Direction::NORTH);
+}
+
+TEST_CASE("invalid input", "[Parser]")
+{
+    auto input = GENERATE(
+        " fasdl;kasf as",
+        "rubbish",
+        "move north move");
+    Parser parser(input);
+    Command nextCommand = parser.nextCommand();
+    REQUIRE(nextCommand.commandType == Command::ERROR);
 }
