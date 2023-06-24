@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <Grid.h>
 #include <Robot.h>
 
 Robot::Robot()
@@ -116,7 +117,7 @@ void Robot::display()
 
 bool Robot::isValidPosition(Position position)
 {
-    if (position.x > 5 || position.x < 0 || position.y > 5 || position.y < 0)
+    if (position.x > Grid::MAX_X || position.x < Grid::MIN_X || position.y > Grid::MAX_Y || position.y < Grid::MIN_Y)
         return false;
     return true;
 }
