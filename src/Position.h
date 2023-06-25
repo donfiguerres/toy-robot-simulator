@@ -15,7 +15,7 @@ public:
      */
     enum Direction
     {
-        NORTH = 0,
+        NORTH,
         EAST,
         SOUTH,
         WEST
