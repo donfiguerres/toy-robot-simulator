@@ -56,9 +56,11 @@ instructions.
 The Command Design Pattern is used to encapsulate each operation as an object.
 This provides a flexible and extensible structure where new commands can be
 easily added, and existing commands can be modified with minimal impact on
-other parts of the code. Using a design pattern can improve the readability
-of the code because a person familiar with the design pattern can easily
-understand the design intent and structure of the project.
+other parts of the code.
+
+Using a design pattern can also improve the readability of the code because a
+person familiar with the design pattern can easily understand the design intent
+and structure of the project.
 
 | Class              | Entity       | Description                                                                     |
 | ------------------ | -----------  | ------------------------------------------------------------------------------- |
@@ -74,6 +76,12 @@ understand the design intent and structure of the project.
 
 The project uses CMake as a build system to ensure that it can be easily built
 and run on various platforms.
+
+### Unit Testing
+
+The Catch2 framework is used as it is a lightweight flexible unit testing
+framework. There is no need to install the Catch2 framework separately as it is
+already included in CMake `FetchContent` requirements.
 
 ## Prerequisites
 
