@@ -102,17 +102,38 @@ Follow the instructions in the CMake installation guide for your environment
 Once you have cloned the project to your working environment, go to the
 project directory and run the following commands.
 
+Generate the CMake files.
+
 ```bash
 cmake .
+```
+
+## Linux/Unix
+
+Build the application with the `make` command.
+
+```bash
 make
 ```
 
-## Running the Tests
-
-To run the tests, simply run the test target of the generated makefile.
+Run the test target of the generated makefile.
 
 ```bash
 make test
+```
+
+## Windows
+
+Build the application with the `msbuild` command.
+
+```cmd
+msbuild robot.sln
+```
+
+Run the test target of the generated makefile.
+
+```cmd
+ctest -C Debug
 ```
 
 ## Running the Command Line Application
@@ -120,8 +141,16 @@ make test
 After building the project, the executable should be available in src/robot.
 To run the application, execute the generated robot binary.
 
+Linux/Unix
+
 ```bash
 ./src/robot
+```
+
+Windows
+
+```cmd
+./src/Debug/robot.exe
 ```
 
 The application will wait for commands via the standard input. Type your command
