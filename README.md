@@ -83,6 +83,13 @@ The Catch2 framework is used as it is a lightweight flexible unit testing
 framework. There is no need to install the Catch2 framework separately as it is
 already included in CMake `FetchContent` requirements.
 
+### Continuous Integration
+
+GitHub Actions is Continuous Integration (CI) tooling chosen as it is freely
+available on GitHub. Using a CI tooling in this project will ensure that all
+the code pushed into the repository is properly tested and all breakages
+are promptly reported and visible in the project's README page.
+
 ## Prerequisites
 
 ### CMake
