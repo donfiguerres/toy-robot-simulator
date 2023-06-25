@@ -4,7 +4,7 @@
 #include <vector>
 #include <tuple>
 
-#include <Map.h>
+#include <SimulationMap.h>
 #include <Robot.h>
 
 TEST_CASE("move north", "[Robot]")
@@ -27,10 +27,10 @@ TEST_CASE("move north", "[Robot]")
 TEST_CASE("avoid falling", "[Robot]")
 {
     auto params = GENERATE(
-        std::make_tuple(0, int(Map::MAX_Y), Position::Direction::NORTH),
-        std::make_tuple(int(Map::MAX_X), 0, Position::Direction::EAST),
-        std::make_tuple(int(Map::MIN_X), 0, Position::Direction::WEST),
-        std::make_tuple(0, int(Map::MIN_Y), Position::Direction::SOUTH));
+        std::make_tuple(0, int(SimulationMap::MAX_Y), Position::Direction::NORTH),
+        std::make_tuple(int(SimulationMap::MAX_X), 0, Position::Direction::EAST),
+        std::make_tuple(int(SimulationMap::MIN_X), 0, Position::Direction::WEST),
+        std::make_tuple(0, int(SimulationMap::MIN_Y), Position::Direction::SOUTH));
     int x = std::get<0>(params);
     int y = std::get<1>(params);
     Position::Direction direction = std::get<2>(params);

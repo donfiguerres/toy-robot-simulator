@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <Map.h>
+#include <SimulationMap.h>
 #include <Robot.h>
 
 Robot::Robot()
@@ -117,7 +117,7 @@ void Robot::display()
 
 bool Robot::isValidPosition(Position position)
 {
-    if (position.x > Map::MAX_X || position.x < Map::MIN_X || position.y > Map::MAX_Y || position.y < Map::MIN_Y)
+    if (position.x > SimulationMap::MAX_X || position.x < SimulationMap::MIN_X || position.y > SimulationMap::MAX_Y || position.y < SimulationMap::MIN_Y)
         return false;
     return true;
 }
