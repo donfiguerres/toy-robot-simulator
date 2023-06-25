@@ -45,7 +45,8 @@ std::unique_ptr<Position> Robot::getPosition()
 
 void Robot::place(Position position)
 {
-    this->position = std::make_unique<Position>(position);
+    if (isValidPosition(position))
+        this->position = std::make_unique<Position>(position);
 }
 
 void Robot::move()

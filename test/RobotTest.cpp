@@ -149,3 +149,23 @@ TEST_CASE("robot not placed", "[Robot]")
     std::unique_ptr<Position> newPosition = robot.getPosition();
     REQUIRE(newPosition == nullptr);
 }
+
+TEST_CASE("place outside map", "[Robot]")
+{
+    auto params = GENERATE(
+        std::make_tuple(int(SimulationMap::MAX_X + 1), int(SimulationMap::MAX_Y)),
+        std::make_tuple((SimulationMap::MAX_X), int(SimulationMap::MAX_Y + 1)),
+        std::make_tuple((SimulationMap::MAX_X + 1), int(SimulationMap::MAX_Y + 1)),
+        std::make_tuple((SimulationMap::MIN_X - 1), int(SimulationMap::MIN_Y)),
+        std::make_tuple((SimulationMap::MIN_X), int(SimulationMap::MIN_Y - 1)),
+        std::make_tuple((SimulationMap::MIN_X - 1), int(SimulationMap::MIN_Y - 1)));
+    int x = std::get<0>(params);
+    int y = std::get<1>(params);
+    Robot robot;
+
+    auto position = Position(x, y, Position::Direction::NORTH);
+    robot.place(position);
+
+    std::unique_ptr<Position> newPosition = robot.getPosition();
+    REQUIRE(newPosition == nullptr);
+}
