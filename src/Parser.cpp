@@ -34,7 +34,7 @@ Parser::Parser(std::string input)
     this->isStdin = false;
 }
 
-Command Parser::nextCommand()
+CommandInstruction Parser::nextCommand()
 {
     std::string line = this->isStdin ? nextLineStdin() : nextLineString();
 
@@ -46,26 +46,26 @@ Command Parser::nextCommand()
         line = trim(line);
 
         if (line.size() == 0)
-            return Command(Command::END);
+            return CommandInstruction(CommandInstruction::END);
 
         if (line == "MOVE")
-            return Command(Command::MOVE);
+            return CommandInstruction(CommandInstruction::MOVE);
 
         if (line == "LEFT")
-            return Command(Command::LEFT);
+            return CommandInstruction(CommandInstruction::LEFT);
 
         if (line == "RIGHT")
-            return Command(Command::RIGHT);
+            return CommandInstruction(CommandInstruction::RIGHT);
 
         if (line == "REPORT")
-            return Command(Command::REPORT);
+            return CommandInstruction(CommandInstruction::REPORT);
 
         // Check the first token
         std::vector<std::string> tokens = tokenize(line, " ", 2);
         if (tokens.front() == "PLACE")
         {
             std::vector<std::string> params = tokenize(tokens[1], ",");
-            Command result(Command::PLACE);
+            CommandInstruction result(CommandInstruction::PLACE);
             auto dir = direction(params[2]);
             Position position(std::stoi(params[0]),
                               std::stoi(params[1]),
@@ -73,11 +73,11 @@ Command Parser::nextCommand()
             result.position = position;
             return result;
         }
-        return Command(Command::ERROR);
+        return CommandInstruction(CommandInstruction::ERROR);
     }
     catch (const ParsingException &e)
     {
-        return Command(Command::ERROR);
+        return CommandInstruction(CommandInstruction::ERROR);
     }
 }
 

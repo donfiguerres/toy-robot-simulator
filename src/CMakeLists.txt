@@ -10,7 +10,7 @@ add_library(
   Robot.cpp
   Parser.cpp
   Position.cpp
-  Command.cpp
+  CommandInstruction.cpp
 )
 
 target_link_libraries(

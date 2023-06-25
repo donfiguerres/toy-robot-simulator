@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include <Command.h>
+#include <CommandInstruction.h>
 
 /**
  * \brief Parser for command input
@@ -34,7 +34,7 @@ public:
      *
      * \return The next Command.
      */
-    Command nextCommand();
+    CommandInstruction nextCommand();
 
 private:
     /**

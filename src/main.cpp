@@ -8,11 +8,11 @@ int main(int argc, char **argv)
     std::unique_ptr<Robot> robot = std::make_unique<Robot>();
     std::unique_ptr<Parser> parser = std::make_unique<Parser>();
 
-    Command cmd = parser->nextCommand();
-    while (cmd.commandType != Command::CommandType::END)
+    CommandInstruction cmd = parser->nextCommand();
+    while (cmd.commandType != CommandInstruction::CommandType::END)
     {
         // Ignore erroneous parsing output.
-        if (cmd.commandType == Command::CommandType::ERROR)
+        if (cmd.commandType == CommandInstruction::CommandType::ERROR)
             continue;
 
         robot->perform(cmd);

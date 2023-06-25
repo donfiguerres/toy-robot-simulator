@@ -11,11 +11,11 @@ TEST_CASE("move north", "[Robot]")
 {
     Robot robot;
 
-    Command cmd1(Command::PLACE);
+    CommandInstruction cmd1(CommandInstruction::PLACE);
     cmd1.position = Position(0, 0, Position::Direction::NORTH);
     robot.perform(cmd1);
 
-    Command cmd2(Command::MOVE);
+    CommandInstruction cmd2(CommandInstruction::MOVE);
     robot.perform(cmd2);
 
     std::unique_ptr<Position> newPosition = robot.getPosition();
@@ -37,11 +37,11 @@ TEST_CASE("avoid falling", "[Robot]")
 
     Robot robot;
 
-    Command cmd1(Command::PLACE);
+    CommandInstruction cmd1(CommandInstruction::PLACE);
     cmd1.position = Position(x, y, direction);
     robot.perform(cmd1);
 
-    Command cmd2(Command::MOVE);
+    CommandInstruction cmd2(CommandInstruction::MOVE);
     robot.perform(cmd2);
 
     // The robot should not move
@@ -62,11 +62,11 @@ TEST_CASE("rotate right", "[Robot]")
     Position::Direction initialDirection = std::get<0>(params);
     Position::Direction expectedDirection = std::get<1>(params);
 
-    Command cmd1(Command::PLACE);
+    CommandInstruction cmd1(CommandInstruction::PLACE);
     cmd1.position = Position(0, 0, initialDirection);
     robot.perform(cmd1);
 
-    Command cmd2(Command::RIGHT);
+    CommandInstruction cmd2(CommandInstruction::RIGHT);
     robot.perform(cmd2);
 
     std::unique_ptr<Position> newPosition = robot.getPosition();
@@ -86,11 +86,11 @@ TEST_CASE("rotate left", "[Robot]")
     Position::Direction initialDirection = std::get<0>(params);
     Position::Direction expectedDirection = std::get<1>(params);
 
-    Command cmd1(Command::PLACE);
+    CommandInstruction cmd1(CommandInstruction::PLACE);
     cmd1.position = Position(0, 0, initialDirection);
     robot.perform(cmd1);
 
-    Command cmd2(Command::LEFT);
+    CommandInstruction cmd2(CommandInstruction::LEFT);
     robot.perform(cmd2);
 
     std::unique_ptr<Position> newPosition = robot.getPosition();
@@ -103,12 +103,12 @@ TEST_CASE("complex", "[Robot]")
 {
     Robot robot;
 
-    Command cmd1(Command::PLACE);
+    CommandInstruction cmd1(CommandInstruction::PLACE);
     cmd1.position = Position(1, 2, Position::Direction::EAST);
     robot.perform(cmd1);
 
-    Command moveCmd(Command::MOVE);
-    Command leftCmd(Command::LEFT);
+    CommandInstruction moveCmd(CommandInstruction::MOVE);
+    CommandInstruction leftCmd(CommandInstruction::LEFT);
 
     robot.perform(moveCmd);
     robot.perform(moveCmd);
@@ -123,15 +123,15 @@ TEST_CASE("complex", "[Robot]")
 
 TEST_CASE("ignore commands before place", "[Robot]")
 {
-    Command moveCmd(Command::MOVE);
-    Command leftCmd(Command::LEFT);
+    CommandInstruction moveCmd(CommandInstruction::MOVE);
+    CommandInstruction leftCmd(CommandInstruction::LEFT);
 
     Robot robot;
 
     // This should be ignored
     robot.perform(moveCmd);
 
-    Command cmd1(Command::PLACE);
+    CommandInstruction cmd1(CommandInstruction::PLACE);
     cmd1.position = Position(1, 2, Position::Direction::EAST);
     robot.perform(cmd1);
 
@@ -148,7 +148,7 @@ TEST_CASE("ignore commands before place", "[Robot]")
 
 TEST_CASE("robot not placed", "[Robot]")
 {
-    Command moveCmd(Command::MOVE);
+    CommandInstruction moveCmd(CommandInstruction::MOVE);
 
     Robot robot;
     robot.perform(moveCmd);

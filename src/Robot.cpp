@@ -9,28 +9,28 @@ Robot::Robot()
     this->position = nullptr;
 }
 
-void Robot::perform(Command cmd)
+void Robot::perform(CommandInstruction cmd)
 {
     // Ignore all commands except PLACE when the robot is not placed. The
     // position is mean to stay as nullptr until a PLACE command is issued.
-    if (this->position == nullptr && cmd.commandType != Command::PLACE)
+    if (this->position == nullptr && cmd.commandType != CommandInstruction::PLACE)
         return;
 
     switch (cmd.commandType)
     {
-    case Command::PLACE:
+    case CommandInstruction::PLACE:
         position = std::make_unique<Position>(cmd.position);
         break;
-    case Command::MOVE:
+    case CommandInstruction::MOVE:
         move();
         break;
-    case Command::LEFT:
+    case CommandInstruction::LEFT:
         rotateLeft();
         break;
-    case Command::RIGHT:
+    case CommandInstruction::RIGHT:
         rotateRight();
         break;
-    case Command::REPORT:
+    case CommandInstruction::REPORT:
         display();
         break;
     }

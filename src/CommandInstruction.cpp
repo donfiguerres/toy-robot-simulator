@@ -1,6 +1,6 @@
-#include <Command.h>
+#include <CommandInstruction.h>
 
-Command::Command(CommandType commandType)
+CommandInstruction::CommandInstruction(CommandType commandType)
 {
     this->commandType = commandType;
 

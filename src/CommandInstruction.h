@@ -9,7 +9,7 @@
  * The Command class is used to represent a command for the toy robot.
  * It includes the type of the command and, for PLACE commands, the position.
  */
-class Command
+class CommandInstruction
 {
 public:
     /**
@@ -34,7 +34,7 @@ public:
      *
      * \param commandType The type of the command
      */
-    Command(CommandType commandType);
+    CommandInstruction(CommandType commandType);
 
     CommandType commandType; ///< The type of the command
     Position position;       ///< The position for PLACE commands. Ignored for other command types.

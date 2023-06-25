@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include <Command.h>
+#include <CommandInstruction.h>
 
 /**
  * \brief Represents a toy robot
@@ -30,7 +30,7 @@ public:
      *
      * \param cmd The command to be performed
      */
-    void perform(Command cmd);
+    void perform(CommandInstruction cmd);
 
     /**
      * \brief Get the current position of the robot
