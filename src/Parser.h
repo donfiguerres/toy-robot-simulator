@@ -12,7 +12,8 @@
  * The Parser class is used to parse command input and convert it into Command
  * objects. It supports reading from standard input or from a provided string.
  *
- * TODO: Abstract the input source into a separate class.
+ * The input can be abstracted later on if multiple input sources need to be
+ * supported.
  */
 class Parser
 {
