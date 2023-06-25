@@ -51,12 +51,19 @@ TEST_CASE("avoid falling", "[Robot]")
     REQUIRE(newPosition->direction == direction);
 }
 
-TEST_CASE("rotate", "[Robot]")
+TEST_CASE("rotate right", "[Robot]")
 {
     Robot robot;
+    auto params = GENERATE(
+        std::make_tuple(Position::Direction::NORTH, Position::Direction::EAST),
+        std::make_tuple(Position::Direction::EAST, Position::Direction::SOUTH),
+        std::make_tuple(Position::Direction::SOUTH, Position::Direction::WEST),
+        std::make_tuple(Position::Direction::WEST, Position::Direction::NORTH));
+    Position::Direction initialDirection = std::get<0>(params);
+    Position::Direction expectedDirection = std::get<1>(params);
 
     Command cmd1(Command::PLACE);
-    cmd1.position = Position(0, 0, Position::Direction::NORTH);
+    cmd1.position = Position(0, 0, initialDirection);
     robot.perform(cmd1);
 
     Command cmd2(Command::RIGHT);
@@ -65,7 +72,31 @@ TEST_CASE("rotate", "[Robot]")
     std::unique_ptr<Position> newPosition = robot.getPosition();
     REQUIRE(newPosition->x == 0);
     REQUIRE(newPosition->y == 0);
-    REQUIRE(newPosition->direction == Position::Direction::EAST);
+    REQUIRE(newPosition->direction == expectedDirection);
+}
+
+TEST_CASE("rotate left", "[Robot]")
+{
+    Robot robot;
+    auto params = GENERATE(
+        std::make_tuple(Position::Direction::NORTH, Position::Direction::WEST),
+        std::make_tuple(Position::Direction::WEST, Position::Direction::SOUTH),
+        std::make_tuple(Position::Direction::SOUTH, Position::Direction::EAST),
+        std::make_tuple(Position::Direction::EAST, Position::Direction::NORTH));
+    Position::Direction initialDirection = std::get<0>(params);
+    Position::Direction expectedDirection = std::get<1>(params);
+
+    Command cmd1(Command::PLACE);
+    cmd1.position = Position(0, 0, initialDirection);
+    robot.perform(cmd1);
+
+    Command cmd2(Command::LEFT);
+    robot.perform(cmd2);
+
+    std::unique_ptr<Position> newPosition = robot.getPosition();
+    REQUIRE(newPosition->x == 0);
+    REQUIRE(newPosition->y == 0);
+    REQUIRE(newPosition->direction == expectedDirection);
 }
 
 TEST_CASE("complex", "[Robot]")

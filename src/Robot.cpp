@@ -53,40 +53,26 @@ void Robot::move()
 
 void Robot::rotateLeft()
 {
-    switch (this->position->direction)
+    if (this->position->direction == Position::Direction::NORTH)
     {
-    case Position::NORTH:
-        this->position->direction = Position::WEST;
-        break;
-    case Position::SOUTH:
-        this->position->direction = Position::EAST;
-        break;
-    case Position::EAST:
-        this->position->direction = Position::NORTH;
-        break;
-    case Position::WEST:
-        this->position->direction = Position::SOUTH;
-        break;
+        this->position->direction = Position::Direction::WEST;
+        return;
     }
+
+    this->position->direction = static_cast<Position::Direction>(
+        this->position->direction - 1);
 }
 
 void Robot::rotateRight()
 {
-    switch (this->position->direction)
+    if (this->position->direction == Position::Direction::WEST)
     {
-    case Position::NORTH:
-        this->position->direction = Position::EAST;
-        break;
-    case Position::SOUTH:
-        this->position->direction = Position::WEST;
-        break;
-    case Position::EAST:
-        this->position->direction = Position::SOUTH;
-        break;
-    case Position::WEST:
-        this->position->direction = Position::NORTH;
-        break;
+        this->position->direction = Position::Direction::NORTH;
+        return;
     }
+
+    this->position->direction = static_cast<Position::Direction>(
+        this->position->direction + 1);
 }
 
 void Robot::display()
