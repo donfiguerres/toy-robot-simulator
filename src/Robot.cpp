@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <string>
 
 #include <SimulationMap.h>
 #include <Robot.h>
