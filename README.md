@@ -3,14 +3,83 @@
 ![actions workflow](https://github.com/donfiguerres/toy-robot-simulator/actions/workflows/cmake.yml/badge.svg)
 
 This is a simulation of a robot toy moving on a square table top with a size of
-5 units x 5 units.
+5 units x 5 units. It reads the instructions from the standard input and will
+perform the necessary actions based on the input.
+
+For example:
+
+```bash
+PLACE X,Y,F
+MOVE
+LEFT
+RIGHT
+REPORT
+```
+
+PLACE will put the toy robot on the table in position X,Y and facing NORTH,
+SOUTH, EAST or WEST. The origin (0,0) can be considered to be the SOUTH WEST
+most corner.
+
+MOVE will move the toy robot one unit forward in the direction it is currently
+facing.
+
+LEFT and RIGHT will rotate the robot 90 degrees in the specified direction
+without changing the position of the robot.
+
+REPORT will announce the X,Y and F of the robot to the standard output.
+
+## Constraints
+
+1. It is required that the first command to the robot is a PLACE command, after
+that, any sequence of commands may be issued, in any order, including another
+PLACE command. The application should discard all commands in the sequence
+until a valid PLACE command has been executed.
+
+2. The toy robot must not fall off the table during movement. This also
+includes the initial placement of the toy robot. Any move that would cause the
+robot to fall must be ignored.
+
+## Design Considerations
+
+### Entities
+
+The problem domain has the following entities.
+
+- Robot: The robot toy itself. It performs the received instructions.
+- Table: The environment where the robot is placed and performs the
+instructions.
+- Position: The current position of the robot in the Table.
+- Instructions: The commands given by the user.
+
+### Design Pattern
+
+The Command Design Pattern is used to encapsulate each operation as an object.
+This provides a flexible and extensible structure where new commands can be
+easily added, and existing commands can be modified with minimal impact on
+other parts of the code. Using a design pattern can improve the readability
+of the code because a person familiar with the design pattern can easily
+understand the design intent and structure of the project.
+
+| Class              | Entity       | Description                                                                     |
+| ------------------ | -----------  | ------------------------------------------------------------------------------- |
+| Robot              | Robot        | Implements the `Robot` entity including its actions                             |
+| Map                | Table        | Contains the properties of the `Table`                                          |
+| Position           | Position     | Contains data about a position in the table                                     |
+| Parser             | -            | Converts the user input into `CommandInstruction`                               |
+| CommandInstruction | Instructions | Data structure containing the user in a format understood by the `Invoker` |
+| Invoker            | -            | Calls the appropriate `Command` based on the received `CommandInstruction`           |
+| Command            | -            | Executes the corresponding `Robot` method.                                                |
+
+### Cross-Platform Compatibility
+
+The project uses CMake as a build system to ensure that it can be easily built
+and run on various platforms.
 
 ## Prerequisites
 
 ### CMake
 
-CMake is used to allow the project to cross-platform compatible. Follow the
-instructions in the CMake installation guide for your environment
+Follow the instructions in the CMake installation guide for your environment
 [here](https://cmake.org/install/).
 
 ## Building the Application
