@@ -19,7 +19,7 @@ void Robot::perform(CommandInstruction cmd)
     switch (cmd.commandType)
     {
     case CommandInstruction::PLACE:
-        position = std::make_unique<Position>(cmd.position);
+        place(cmd.position);
         break;
     case CommandInstruction::MOVE:
         move();
@@ -41,6 +41,11 @@ std::unique_ptr<Position> Robot::getPosition()
     if (this->position == nullptr)
         return nullptr;
     return std::make_unique<Position>(*this->position);
+}
+
+void Robot::place(Position position)
+{
+    this->position = std::make_unique<Position>(position);
 }
 
 void Robot::move()
