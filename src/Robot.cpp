@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 
 #include <SimulationMap.h>
 #include <Robot.h>
@@ -53,52 +54,40 @@ void Robot::move()
 
 void Robot::rotateLeft()
 {
-    if (this->position->direction == Position::Direction::NORTH)
-    {
-        this->position->direction = Position::Direction::WEST;
-        return;
-    }
-
-    this->position->direction = static_cast<Position::Direction>(
-        this->position->direction - 1);
+    std::map<Position::Direction, Position::Direction> directionMap = {
+        {Position::NORTH, Position::WEST},
+        {Position::EAST, Position::NORTH},
+        {Position::SOUTH, Position::EAST},
+        {Position::WEST, Position::SOUTH},
+    };
+    this->position->direction = directionMap[this->position->direction];
 }
 
 void Robot::rotateRight()
 {
-    if (this->position->direction == Position::Direction::WEST)
-    {
-        this->position->direction = Position::Direction::NORTH;
-        return;
-    }
-
-    this->position->direction = static_cast<Position::Direction>(
-        this->position->direction + 1);
+    std::map<Position::Direction, Position::Direction> directionMap = {
+        {Position::NORTH, Position::EAST},
+        {Position::EAST, Position::SOUTH},
+        {Position::SOUTH, Position::WEST},
+        {Position::WEST, Position::NORTH},
+    };
+    this->position->direction = directionMap[this->position->direction];
 }
 
 void Robot::display()
 {
     // This method can be offloaded later on to a Display class
     // for more flexibility on displaying the report.
-    std::string direction = "";
+    std::map<Position::Direction, std::string> directionMap = {
+        {Position::NORTH, "NORTH"},
+        {Position::SOUTH, "SOUTH"},
+        {Position::EAST, "EAST"},
+        {Position::WEST, "WEST"},
+    };
+    std::string direction = directionMap[position->direction];
 
-    switch (position->direction)
-    {
-    case Position::NORTH:
-        direction = "NORTH";
-        break;
-    case Position::SOUTH:
-        direction = "SOUTH";
-        break;
-    case Position::EAST:
-        direction = "EAST";
-        break;
-    case Position::WEST:
-        direction = "WEST";
-        break;
-    }
-
-    std::cout << position->x << "," << position->y << "," << direction
-              << std::endl;
+    std::cout
+        << position->x << "," << position->y << "," << direction << std::endl;
 }
 
 bool Robot::isValidPosition(Position position)
