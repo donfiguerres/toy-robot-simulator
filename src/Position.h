@@ -1,5 +1,5 @@
-#ifndef POSITION
-#define POSITION
+#ifndef POSITION_H
+#define POSITION_H
 
 /**
  * \brief Represents the position of the toy robot

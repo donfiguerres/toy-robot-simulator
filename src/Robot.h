@@ -1,5 +1,5 @@
-#ifndef ROBOT
-#define ROBOT
+#ifndef ROBOT_H
+#define ROBOT_H
 
 #include <memory>
 

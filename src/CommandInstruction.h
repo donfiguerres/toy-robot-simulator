@@ -1,5 +1,5 @@
-#ifndef COMMAND
-#define COMMAND
+#ifndef COMMAND_INSTRUCTION_H
+#define COMMAND_INSTRUCTION_H
 
 #include <Position.h>
 
