@@ -46,7 +46,7 @@ void Robot::move()
 {
     // It is expected that the position is not nullptr because we only execute
     // the MOVE command when the robot is placed.
-    Position newPosition = calcNewPositionAfterMove(*this->position);
+    Position newPosition = calculateNewPosition(*this->position);
     if (isValidPosition(newPosition))
         this->position = std::make_unique<Position>(newPosition);
 }
@@ -108,7 +108,7 @@ bool Robot::isValidPosition(Position position)
     return true;
 }
 
-Position Robot::calcNewPositionAfterMove(Position position)
+Position Robot::calculateNewPosition(Position position)
 {
     Position newPosition = position;
     switch (position.direction)

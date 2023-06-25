@@ -84,7 +84,7 @@ private:
      * \param position The current position
      * \return The new position after the move
      */
-    static Position calcNewPositionAfterMove(Position position);
+    static Position calculateNewPosition(Position position);
 };
 
 #endif
