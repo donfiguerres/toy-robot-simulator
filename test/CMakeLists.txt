@@ -25,7 +25,16 @@ target_link_libraries(
     robot_core
 )
 
+add_executable(InvokerTest InvokerTest.cpp)
+
+target_link_libraries(
+    InvokerTest
+    PRIVATE Catch2::Catch2WithMain
+    robot_core
+)
+
 include(CTest)
 include(Catch)
 catch_discover_tests(RobotTest)
 catch_discover_tests(ParserTest)
+catch_discover_tests(InvokerTest)
