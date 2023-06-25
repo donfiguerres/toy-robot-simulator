@@ -45,9 +45,6 @@ CommandInstruction Parser::nextCommandInstruction()
         std::transform(line.begin(), line.end(), line.begin(), ::toupper);
         line = trim(line);
 
-        if (line.size() == 0)
-            return CommandInstruction(CommandInstruction::END);
-
         if (line == "MOVE")
             return CommandInstruction(CommandInstruction::MOVE);
 

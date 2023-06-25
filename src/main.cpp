@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     auto controller = std::make_shared<Invoker>();
 
     for (CommandInstruction instruction = parser->nextCommandInstruction();
-         instruction.commandType != CommandInstruction::CommandType::END;
+         true;
          instruction = parser->nextCommandInstruction())
     {
         // Ignore erroneous input.

@@ -5,12 +5,6 @@
 
 #include <Parser.h>
 
-TEST_CASE("end of input", "[Parser]")
-{
-    Parser parser("");
-    REQUIRE(parser.nextCommandInstruction().commandType == CommandInstruction::END);
-}
-
 TEST_CASE("move", "[Parser]")
 {
     Parser parser("MOVE");

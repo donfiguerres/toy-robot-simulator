@@ -22,8 +22,7 @@ public:
         LEFT,   ///< Rotate the robot 90 degrees to the left
         RIGHT,  ///< Rotate the robot 90 degrees to the right
         REPORT, ///< Print the robot's current position and direction
-        ERROR,  ///< Failed to parse the command
-        END     ///< End of input
+        ERROR   ///< Failed to parse the command
     };
 
     /**
