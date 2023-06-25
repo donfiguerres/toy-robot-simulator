@@ -34,7 +34,7 @@ Parser::Parser(std::string input)
     this->isStdin = false;
 }
 
-CommandInstruction Parser::nextCommand()
+CommandInstruction Parser::nextCommandInstruction()
 {
     std::string line = this->isStdin ? nextLineStdin() : nextLineString();
 

@@ -1,22 +1,26 @@
 #include <iostream>
 
+#include <Command.h>
+#include <Controller.h>
 #include <Robot.h>
 #include <Parser.h>
 
 int main(int argc, char **argv)
 {
-    std::unique_ptr<Robot> robot = std::make_unique<Robot>();
-    std::unique_ptr<Parser> parser = std::make_unique<Parser>();
+    auto robot = std::make_shared<Robot>();
+    auto parser = std::make_shared<Parser>();
+    auto controller = std::make_shared<Controller>();
 
-    CommandInstruction cmd = parser->nextCommand();
-    while (cmd.commandType != CommandInstruction::CommandType::END)
+    for (CommandInstruction instruction = parser->nextCommandInstruction();
+         instruction.commandType != CommandInstruction::CommandType::END;
+         instruction = parser->nextCommandInstruction())
     {
-        // Ignore erroneous parsing output.
-        if (cmd.commandType == CommandInstruction::CommandType::ERROR)
+        // Ignore erroneous input.
+        if (instruction.commandType == CommandInstruction::CommandType::ERROR)
             continue;
 
-        robot->perform(cmd);
-        cmd = parser->nextCommand();
+        auto command = controller->createCommand(instruction);
+        command->execute(robot);
     }
 
     return 0;

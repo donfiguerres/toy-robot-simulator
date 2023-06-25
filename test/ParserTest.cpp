@@ -9,49 +9,49 @@
 TEST_CASE("end of input", "[Parser]")
 {
     Parser parser("");
-    REQUIRE(parser.nextCommand().commandType == CommandInstruction::END);
+    REQUIRE(parser.nextCommandInstruction().commandType == CommandInstruction::END);
 }
 
 TEST_CASE("move", "[Parser]")
 {
     Parser parser("MOVE");
-    REQUIRE(parser.nextCommand().commandType == CommandInstruction::MOVE);
+    REQUIRE(parser.nextCommandInstruction().commandType == CommandInstruction::MOVE);
 }
 
 TEST_CASE("left", "[Parser]")
 {
     Parser parser("LEFT");
-    REQUIRE(parser.nextCommand().commandType == CommandInstruction::LEFT);
+    REQUIRE(parser.nextCommandInstruction().commandType == CommandInstruction::LEFT);
 }
 
 TEST_CASE("right", "[Parser]")
 {
     Parser parser("RIGHT");
-    REQUIRE(parser.nextCommand().commandType == CommandInstruction::RIGHT);
+    REQUIRE(parser.nextCommandInstruction().commandType == CommandInstruction::RIGHT);
 }
 
 TEST_CASE("report", "[Parser]")
 {
     Parser parser("REPORT");
-    REQUIRE(parser.nextCommand().commandType == CommandInstruction::REPORT);
+    REQUIRE(parser.nextCommandInstruction().commandType == CommandInstruction::REPORT);
 }
 
 TEST_CASE("report lowercase", "[Parser]")
 {
     Parser parser("report");
-    REQUIRE(parser.nextCommand().commandType == CommandInstruction::REPORT);
+    REQUIRE(parser.nextCommandInstruction().commandType == CommandInstruction::REPORT);
 }
 
 TEST_CASE("report space", "[Parser]")
 {
     Parser parser("   REPORT    ");
-    REQUIRE(parser.nextCommand().commandType == CommandInstruction::REPORT);
+    REQUIRE(parser.nextCommandInstruction().commandType == CommandInstruction::REPORT);
 }
 
 TEST_CASE("place", "[Parser]")
 {
     Parser parser("PLACE 1,2,NORTH");
-    CommandInstruction nextCommand = parser.nextCommand();
+    CommandInstruction nextCommand = parser.nextCommandInstruction();
     REQUIRE(nextCommand.commandType == CommandInstruction::PLACE);
     REQUIRE(nextCommand.position.x == 1);
     REQUIRE(nextCommand.position.y == 2);
@@ -61,7 +61,7 @@ TEST_CASE("place", "[Parser]")
 TEST_CASE("place space", "[Parser]")
 {
     Parser parser("  PLACE 1, 2, NORTH    ");
-    CommandInstruction nextCommand = parser.nextCommand();
+    CommandInstruction nextCommand = parser.nextCommandInstruction();
     REQUIRE(nextCommand.commandType == CommandInstruction::PLACE);
     REQUIRE(nextCommand.position.x == 1);
     REQUIRE(nextCommand.position.y == 2);
@@ -75,6 +75,6 @@ TEST_CASE("invalid input", "[Parser]")
         "rubbish",
         "move north move");
     Parser parser(input);
-    CommandInstruction nextCommand = parser.nextCommand();
+    CommandInstruction nextCommand = parser.nextCommandInstruction();
     REQUIRE(nextCommand.commandType == CommandInstruction::ERROR);
 }

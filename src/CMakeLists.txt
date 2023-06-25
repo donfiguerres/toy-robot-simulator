@@ -7,10 +7,12 @@ add_executable(
 
 add_library(
   robot_core
+  Command.cpp
+  CommandInstruction.cpp
+  Controller.cpp
   Robot.cpp
   Parser.cpp
   Position.cpp
-  CommandInstruction.cpp
 )
 
 target_link_libraries(
