@@ -82,8 +82,7 @@ TEST_CASE("rotate left", "[Robot]")
     auto position = Position(0, 0, initialDirection);
     robot.place(position);
 
-    CommandInstruction cmd2(CommandInstruction::LEFT);
-    robot.perform(cmd2);
+    robot.rotateLeft();
 
     std::unique_ptr<Position> newPosition = robot.getPosition();
     REQUIRE(newPosition->x == 0);

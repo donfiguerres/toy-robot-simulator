@@ -22,17 +22,6 @@ public:
     Robot();
 
     /**
-     * \brief Perform a command
-     *
-     * Depending on the command type, the robot will either move, rotate left,
-     * rotate right, or display its current position. The command is ignored if
-     * it would cause the robot to move off the grid.
-     *
-     * \param cmd The command to be performed
-     */
-    void perform(CommandInstruction cmd);
-
-    /**
      * \brief Get the current position of the robot
      *
      * This function returns a unique pointer to a copy of the current position
