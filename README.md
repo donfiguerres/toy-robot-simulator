@@ -63,7 +63,7 @@ understand the design intent and structure of the project.
 | Class              | Entity       | Description                                                                     |
 | ------------------ | -----------  | ------------------------------------------------------------------------------- |
 | Robot              | Robot        | Implements the `Robot` entity including its actions                             |
-| Map                | Table        | Contains the properties of the `Table`                                          |
+| SimulationMap      | Table        | Contains the properties of the `Table`                                          |
 | Position           | Position     | Contains data about a position in the table                                     |
 | Parser             | -            | Converts the user input into `CommandInstruction`                               |
 | CommandInstruction | Instructions | Data structure containing the user in a format understood by the `Invoker` |
