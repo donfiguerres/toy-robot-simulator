@@ -4,10 +4,11 @@
 #include <Position.h>
 
 /**
- * \brief Encapsulates a command for the toy robot
+ * \brief Encapsulates a user command instruction for the toy robot
  *
- * The Command class is used to represent a command for the toy robot.
- * It includes the type of the command and, for PLACE commands, the position.
+ * The CommandInstruction class is used to represent a user instruction for the
+ * toy robot. It includes the type of the command and, for PLACE commands, the
+ * position.
  */
 class CommandInstruction
 {
@@ -26,10 +27,10 @@ public:
     };
 
     /**
-     * \brief Construct a new Command object
+     * \brief Construct a new CommandInstruction object
      *
-     * Constructs a new Command of the given type. If the command type is PLACE,
-     * the position should be set separately.
+     * Constructs a new CommandInstruction of the given type. If the command
+     * type is PLACE, the position should be set separately.
      *
      * \param commandType The type of the command
      */
