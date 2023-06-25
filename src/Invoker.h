@@ -7,9 +7,12 @@
 #include <CommandInstruction.h>
 #include <Robot.h>
 
-class Controller
+class Invoker
 {
 public:
+    void executeCommand(std::shared_ptr<Robot> robot, CommandInstruction instruction);
+
+private:
     std::unique_ptr<Command> createCommand(CommandInstruction instruction);
 };
 

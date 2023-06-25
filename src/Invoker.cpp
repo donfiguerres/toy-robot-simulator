@@ -1,9 +1,16 @@
 #include <functional>
 #include <map>
 
-#include <Controller.h>
+#include <Invoker.h>
 
-std::unique_ptr<Command> Controller::createCommand(CommandInstruction instruction)
+void Invoker::executeCommand(std::shared_ptr<Robot> robot,
+                             CommandInstruction instruction)
+{
+    auto command = createCommand(instruction);
+    command->execute(robot);
+}
+
+std::unique_ptr<Command> Invoker::createCommand(CommandInstruction instruction)
 {
     std::map<CommandInstruction::CommandType, std::function<std::unique_ptr<Command>(void)>> commands = {
         {CommandInstruction::PLACE, [&]()

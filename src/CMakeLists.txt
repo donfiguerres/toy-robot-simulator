@@ -9,7 +9,7 @@ add_library(
   robot_core
   Command.cpp
   CommandInstruction.cpp
-  Controller.cpp
+  Invoker.cpp
   Robot.cpp
   Parser.cpp
   Position.cpp
