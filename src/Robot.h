@@ -44,7 +44,6 @@ public:
      */
     std::unique_ptr<Position> getPosition();
 
-private:
     /// \brief Place the robot on the grid at the given position.
     void place(Position position);
 
@@ -66,6 +65,7 @@ private:
      */
     void display();
 
+private:
     std::unique_ptr<Position> position; ///< Current position of the robot
 
     /**

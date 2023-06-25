@@ -50,8 +50,8 @@ void Robot::place(Position position)
 
 void Robot::move()
 {
-    // It is expected that the position is not nullptr because we only execute
-    // the MOVE command when the robot is placed.
+    if (this->position == nullptr)
+        return;
     Position newPosition = calculateNewPosition(*this->position);
     if (isValidPosition(newPosition))
         this->position = std::make_unique<Position>(newPosition);
@@ -59,6 +59,8 @@ void Robot::move()
 
 void Robot::rotateLeft()
 {
+    if (this->position == nullptr)
+        return;
     std::map<Position::Direction, Position::Direction> directionMap = {
         {Position::NORTH, Position::WEST},
         {Position::EAST, Position::NORTH},
@@ -70,6 +72,8 @@ void Robot::rotateLeft()
 
 void Robot::rotateRight()
 {
+    if (this->position == nullptr)
+        return;
     std::map<Position::Direction, Position::Direction> directionMap = {
         {Position::NORTH, Position::EAST},
         {Position::EAST, Position::SOUTH},
@@ -81,6 +85,8 @@ void Robot::rotateRight()
 
 void Robot::display()
 {
+    if (this->position == nullptr)
+        return;
     // This method can be offloaded later on to a Display class
     // for more flexibility on displaying the report.
     std::map<Position::Direction, std::string> directionMap = {
